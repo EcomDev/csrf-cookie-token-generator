@@ -10,6 +10,7 @@ edition = "2018"
 hyper = "0.12.34"
 md5 = "0.6.1"
 serde_json = "1.0.40"
-rand = "0.7.0"
+rand = { version="0.7.0", features=["small_rng"] }
 structopt = "0.3.1"
 futures = "*"
+cookie = "0.12.0"

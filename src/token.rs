@@ -1,6 +1,6 @@
 use serde_json::{to_string, json};
 use md5::compute;
-use rand::{thread_rng, distributions::Alphanumeric, Rng};
+use rand::{distributions::{Alphanumeric, Distribution}, RngCore};
 
 fn create_token_string_for_checksum(token: &String, secret: &String) -> String
 {
@@ -19,16 +19,23 @@ pub fn sign_token(token: &String, secret: &String) -> String
     )
 }
 
-pub fn create_token(len: u8) -> String
+pub fn create_token(len: usize,  rng: &mut impl RngCore) -> String
 {
-    let rng =  thread_rng();
-    rng.sample_iter(Alphanumeric).take(len.into()).collect()
+    let mut key = String::with_capacity(len);
+
+
+    while key.len() < len {
+        key.push(Alphanumeric.sample(rng))
+    }
+
+    key
 }
 
 #[cfg(test)]
 mod tests
 {
     use super::*;
+    use rand::rngs::mock::StepRng;
 
     #[test]
     fn generates_token_json_string () {
@@ -51,10 +58,11 @@ mod tests
     }
 
     #[test]
-    fn generates_token_of_required_size() {
+    fn generates_a_token_with_rng() {
+        let mut rng = StepRng::new(10, 9000000);
         assert_eq!(
-            16,
-            create_token(16).len()
+            "AAAAAAAABBBBBBBC",
+            create_token(16, &mut rng)
         );
     }
 }
