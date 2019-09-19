@@ -20,6 +20,8 @@ main() {
     cross rustc --bin csrf-cookie-token --target $TARGET --release -- -C lto
 
     TARGET_NAME="${TARGET/-unknown}"
+
+    TARGET_NAME=$(echo $TARGET | sed 's/-unknown//g')
     cp target/$TARGET/release/csrf-cookie-token $stage/
 
     cd $stage

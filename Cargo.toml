@@ -1,6 +1,6 @@
 [package]
 name = "csrf-cookie-token"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Ivan Chepurnyi <ivan.chepurnyi@ecomdev.org>"]
 edition = "2018"
 
