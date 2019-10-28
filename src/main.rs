@@ -19,6 +19,9 @@ fn main() {
     };
 
     let server = Server::bind(&addr)
+        .http1_only(true)
+        .http1_max_buf_size(8192)
+        .tcp_nodelay(true)
         .serve(make_service)
         .map_err(|e| {
             eprintln!("server error: {}", e);
