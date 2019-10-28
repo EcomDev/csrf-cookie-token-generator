@@ -57,7 +57,7 @@ impl HttpArgs
             cookie_domain: self.cookie_domain.clone(),
             checksum_cookie_name: self.checksum_cookie_name.clone(),
             token_cookie_name: self.token_cookie_name.clone(),
-            rng: SmallRng::from_entropy()
+            rng: SmallRng::from_rng(thread_rng()).unwrap()
         }
     }
 }
